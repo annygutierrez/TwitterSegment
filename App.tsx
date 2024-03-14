@@ -16,6 +16,10 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import Button from './src/Button';
+import { createClient, AnalyticsProvider } from '@segment/analytics-react-native';
+
+import { FirebasePlugin } from '@segment/analytics-react-native-plugin-firebase';
 
 import {
   Colors,
@@ -24,6 +28,15 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+const segmentClient = createClient({
+  writeKey: 'SEGMENT_KEY',
+  writeKey: "wxqFiG2JPY8B9mChXtW6lkw1fw62AIiC",
+  trackAppLifecycleEvents: true,
+  debug: true,
+});
+
+segmentClient.add({ plugin: new FirebasePlugin() });
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -63,6 +76,7 @@ function App(): React.JSX.Element {
   };
 
   return (
+    <AnalyticsProvider client={segmentClient}>
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
@@ -72,6 +86,7 @@ function App(): React.JSX.Element {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
+        <Button />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
@@ -93,6 +108,7 @@ function App(): React.JSX.Element {
         </View>
       </ScrollView>
     </SafeAreaView>
+    </AnalyticsProvider>
   );
 }
 
