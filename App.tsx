@@ -20,6 +20,7 @@ import Button from './src/Button';
 import { createClient, AnalyticsProvider } from '@segment/analytics-react-native';
 
 import { FirebasePlugin } from '@segment/analytics-react-native-plugin-firebase';
+import { AppsflyerPlugin } from '@segment/analytics-react-native-plugin-appsflyer';
 
 import {
   Colors,
@@ -37,6 +38,7 @@ const segmentClient = createClient({
 });
 
 segmentClient.add({ plugin: new FirebasePlugin() });
+segmentClient.add({ plugin: new AppsflyerPlugin() });
 
 type SectionProps = PropsWithChildren<{
   title: string;
